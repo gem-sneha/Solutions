@@ -1,0 +1,104 @@
+                                   // BRUTE
+ 
+ 
+      
+       pair<int, int> res;
+
+        int freq[n+1];
+        
+         for(int i=0;i<n+1;i++){
+             freq[i]=0;
+         }
+        
+        for(int i=0;i<n+1;i++)
+            {
+              freq[arr[i]]++;
+            }
+            
+        for(int i=0;i<n+1;i++){
+            if(freq[i]==0){
+                res.first=i;
+            }
+            else if(freq[i]>1){
+                res.second=i;
+            }
+        }
+        return res;
+                                       
+                                       
+                                       // MATHS
+       
+     
+      
+       pair<int, int> res;
+    long long int S = (n*(n+1))/2;
+    long long int P=  (n*(n+1)*(2*n+1))/6;
+    int repeating;
+    int missing;
+    for(int i=0;i<n;i++){
+        S-= (long long int)arr[i];
+        P-=(long long int)arr[i]*(long long int)arr[i];
+    }
+   missing= (S+P/S)/2;
+    repeating= missing-S;
+    
+    
+        res.first= missing;
+        res.second=repeating;
+        return res;
+    
+    
+    
+    
+    
+    
+                                             // USING XOR
+                                             
+      pair<int, int> res;
+    int xor1= arr[0];
+    int set_right_bit;
+    for(int i=1;i<n;i++){
+        xor1  = xor1 ^ arr[i];
+    }
+    
+    for(int i=1;i<=n;i++){
+        xor1  = xor1 ^ i;
+    }
+    
+    set_right_bit= xor1 & ~ (xor1 -1) ;
+    int x=0;
+    int y=0;
+    
+    for(int i=0;i<n;i++){
+        if(set_right_bit & arr[i]){
+           x =  x ^ arr[i];
+        }
+        else{
+            y= y^ arr[i];
+        }
+    }
+    
+    for(int i=1;i<=n;i++){
+        if(set_right_bit & i){
+           x =  x ^ i;
+        }
+        else{
+            y= y^ i;
+        }
+    }
+    
+    int x_count = 0;
+    for (int i=0; i<n; i++) {
+        if (arr[i]==x)
+            x_count++;
+    }
+    
+    if (x_count==0)
+        swap(x,y);
+    
+    res.first= y;
+    res.second= x;
+    
+    
+    return res;
+    
