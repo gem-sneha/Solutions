@@ -1,0 +1,74 @@
+                                        ///BRUTE FORCE
+                                     
+long long getInversions(long long *arr, int n){
+    int count=0;
+    for(int i=0;i<n;i++){
+        for(int j=i+1;j<n;j++){
+            if(arr[i]>arr[j]){
+                count++;
+            }
+        }
+    }
+    return count;
+}
+
+
+
+
+                                        /// OPTIMIZED SOLUTION
+
+#include <bits/stdc++.h> 
+ 
+  
+int Merge(long long int arr[], long long int temp[], int low,int mid, int high, long long int& count){
+    int i=low;
+    int j= mid;
+    int k=low;
+   
+    while(i<mid && j<=high){
+        if(arr[i]<=arr[j]){
+            temp[k++]=arr[i++];
+        }
+        else{
+            temp[k++]=arr[j++];
+            count = count+ (mid-i);
+        }
+        
+        while(i<mid){
+            temp[k++]=arr[i++];
+        }
+        while(j<=high){
+            temp[k++]=arr[j++];
+          }
+        return count;
+        
+    }
+}
+int MergeSort(long long int arr[], long long int temp[], int low, int high, long long int& count){
+     int mid=0;
+     
+    if(low<high){
+        mid= (low+high)/2;
+        
+      MergeSort(arr,temp,low, mid, count);
+       MergeSort(arr,temp,mid+1, high, count);
+      Merge(arr, temp,low, mid+1, high, count); 
+}
+    return count;
+}
+    
+
+
+
+
+long long int getInversions(long long *arr, int n){
+    // Write your code here.
+   int low=0;
+    int high= n-1;
+long long int temp[n];
+   long long int count=0;
+    MergeSort(arr,temp,low, high, count);
+    return count;
+        
+    }
+   
